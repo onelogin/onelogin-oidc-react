@@ -1,0 +1,21 @@
+.Profile-page {
+  margin-top: 30px;
+}
+
+.Profile-page > h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.Profile-data {
+  justify-items: normal;
+}
+
+.Profile-section {
+  margin-bottom: 35px;
+}
+
+.Profile-section p {
+  margin: 0px;
+  padding: 5px;
+}
