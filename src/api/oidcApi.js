@@ -1,7 +1,7 @@
 import { stringify } from "query-string";
 
 // Static oidc params for a single provider
-const authority = "https://openid-connect.onelogin.com/oidc";
+const authority = "https://<ONELOGIN SUBDOMAIN>.onelogin.com/oidc/2";
 const client_id = "ENTER YOUR CLIENT ID HERE";
 const redirect_uri = "http://localhost:3000/auth";
 const response_type = "id_token token";
