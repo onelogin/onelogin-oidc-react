@@ -6,7 +6,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "nanoid": "^2.1.6",
-    "query-string": "^6.8.3",
+    "query-string": "^6.13.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-loader": "^2.4.5",
