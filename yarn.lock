@@ -5787,9 +5787,9 @@ nan@^2.12.1:
   version "2.14.1"
   resolved "https://registry.npmjs.org/nan/-/nan-2.14.1.tgz"
 
-nanoid@^2.1.6:
-  version "2.1.11"
-  resolved "https://registry.npmjs.org/nanoid/-/nanoid-2.1.11.tgz"
+nanoid@^3.1.31:
+  version "3.1.31"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.31.tgz#f5b58a1ce1b7604da5f0605757840598d8974dc6"
 
 nanomatch@^1.2.9:
   version "1.2.13"
