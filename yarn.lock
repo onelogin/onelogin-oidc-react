@@ -9098,8 +9098,8 @@ wide-align@^1.1.0:
     string-width "^1.0.2 || 2 || 3 || 4"
 
 word-wrap@~1.2.3:
-  version "1.2.3"
-  resolved "https://registry.npmjs.org/word-wrap/-/word-wrap-1.2.3.tgz"
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.4.tgz#cb4b50ec9aca570abd1f52f33cd45b6c61739a9f"
 
 workbox-background-sync@^4.3.1:
   version "4.3.1"
