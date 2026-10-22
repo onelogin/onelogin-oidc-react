@@ -1,44 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   Redirect
 } from "react-router-dom";
-import { parse } from "query-string";
-import jwtDecode from "jwt-decode";
-import isEmpty from "lodash/isEmpty";
 import Loader from "react-loader";
 
+import * as oidcApi from "../api/oidcApi";
 import { receiveAccessToken, receiveIdToken } from "../actions/tokenActions";
 import { receiveProfileData } from "../actions/profileActions";
 
 const AuthPage = ({
   location,
-  profile,
   receiveProfile,
   receiveTokens
 }) => {
-  if (isEmpty(profile)) {
-    const hash = location.hash;
-    const response = parse(hash);
-    if (response.error) {
-      alert(response.error_description);
-      return <Redirect to="/home" />
-    } else {
-      receiveTokens(response.access_token, response.idToken);
-      receiveProfile(jwtDecode(response.id_token));
-    }
-    // Render loader
-    return <Loader />;
-  } else {
-    return <Redirect to="/profile" />
-  }
-};
+  const [redirect, setRedirect] = useState(null);
 
-const mapStateToProps = state => ({
-  profile: state.profile,
-  state: state.token.state,
-  nonce: state.token.nonce
-});
+  useEffect(() => {
+    try {
+      const {
+        accessToken,
+        idToken,
+        profile,
+        returnTo
+      } = oidcApi.completeAuth(location.hash);
+      receiveTokens(accessToken, idToken);
+      receiveProfile(profile);
+      // Go back to the page that sent us to login, if there was one
+      setRedirect(returnTo || "/profile");
+    } catch (error) {
+      alert(error.message);
+      setRedirect("/home");
+    }
+  }, [location.hash, receiveProfile, receiveTokens]);
+
+  // Render loader until the response has been checked
+  return redirect ? <Redirect to={redirect} /> : <Loader />;
+};
 
 const mapDispatchToProps = dispatch => ({
   receiveProfile: data => dispatch(receiveProfileData(data)),
@@ -49,6 +47,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(AuthPage);
