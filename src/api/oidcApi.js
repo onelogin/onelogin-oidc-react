@@ -35,19 +35,21 @@ export const beginAuth = ({ state, nonce, returnTo }) => {
 
 export const completeAuth = hash => {
   const pending = JSON.parse(sessionStorage.getItem(pendingAuthKey));
+  // OneLogin returns the result in the fragment: #id_token=...&access_token=...&state=...
+  const response = new URLSearchParams(hash.replace(/^#/, ""));
+
+  // Reject a response to a login this tab didn't start (CSRF). It leaves the
+  // pending login alone, so the real response can still complete it
+  if (!pending || response.get("state") !== pending.state) {
+    throw new Error("Login failed: state does not match");
+  }
   // A response can only be used once
   sessionStorage.removeItem(pendingAuthKey);
 
-  // OneLogin returns the result in the fragment: #id_token=...&access_token=...&state=...
-  const response = new URLSearchParams(hash.replace(/^#/, ""));
   if (response.has("error")) {
     throw new Error(
       response.get("error_description") || response.get("error")
     );
-  }
-  // Reject a response to a login this tab didn't start (CSRF)
-  if (!pending || response.get("state") !== pending.state) {
-    throw new Error("Login failed: state does not match");
   }
   const idToken = response.get("id_token");
   // Decoded, not verified: enough to show the profile, but anything that

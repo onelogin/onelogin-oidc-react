@@ -156,6 +156,23 @@ it("rejects a response with a different state", () => {
   expect(store.getState().profile).toBeNull();
 });
 
+it("keeps the login going after a response with a different state", () => {
+  const { state, nonce } = startLogin("/profile?tab=1#top");
+
+  returnFromOneLogin({ error: "access_denied", state: "someone-elses-state" });
+  expect(window.alert).toHaveBeenCalledWith(
+    "Login failed: state does not match"
+  );
+
+  returnFromOneLogin({
+    access_token: "access-token",
+    id_token: idToken({ ...profileClaims, nonce }),
+    state
+  });
+  expect(redirectedTo()).toBe("/profile?tab=1#top");
+  expect(container.textContent).toContain("jdoe's ProfilePage");
+});
+
 it("rejects an id_token issued for a different login", () => {
   const { state } = startLogin("/profile");
 
