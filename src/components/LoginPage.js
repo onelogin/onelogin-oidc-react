@@ -7,11 +7,14 @@ import { generateStateAndNonce } from "../actions/tokenActions";
 
 import "../css/LoginPage.css";
 
-const LoginPage = ({ state, nonce, generateParams }) => {
+const LoginPage = ({ location, state, nonce, generateParams }) => {
   if (state === null || nonce === null) {
     generateParams();
   } else {
-    oidcApi.beginAuth({ state, nonce });
+    // Set by ProtectedRoute when a page needed login first
+    const from = location.state && location.state.from;
+    const returnTo = from && `${from.pathname}${from.search}${from.hash}`;
+    oidcApi.beginAuth({ state, nonce, returnTo });
   }
 
   return (

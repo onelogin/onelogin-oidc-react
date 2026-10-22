@@ -4,15 +4,13 @@
   "private": true,
   "dependencies": {
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.21",
     "nanoid": "^3.1.31",
-    "query-string": "^6.13.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-loader": "^2.4.5",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.2.0",
+    "react-scripts": "5.0.1",
     "redux": "^4.0.4"
   },
   "scripts": {
