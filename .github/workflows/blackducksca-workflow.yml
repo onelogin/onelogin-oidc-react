@@ -21,6 +21,10 @@ permissions:
   pull-requests: write          # Required to add comments or create fix pull requests
 jobs:
   blackducksca:
+    # Dependabot-triggered runs get no Actions secrets, so this scan can only fail
+    # there ("[blackduck_token] - required parameters for blackduck is missing").
+    # Skip Dependabot's PRs: the push scan after the merge still covers the change.
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
